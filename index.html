@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Muskaan ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff4e88, #ff9a9e);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    animation: backgroundPulse 6s infinite alternate;
+}
+
+@keyframes backgroundPulse {
+    from { background: linear-gradient(135deg, #ff4e88, #ff9a9e); }
+    to { background: linear-gradient(135deg, #ff6a9e, #ffc3a0); }
+
+.card {
+    background: rgba(255,255,255,0.15);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    animation: fadeIn 2s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+h1 {
+    font-size: 22px;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 15px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s ease;
+}
+
+.yes {
+    background-color: white;
+    color: #ff4e88;
+    z-index: 2;
+}
+
+.no {
+    background-color: #ff1e56;
+    color: white;
+    position: absolute;
+}
+
+.hidden {
+    display: none;
+}
+
+.message-box {
+    margin-top: 20px;
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+.gif {
+    width: 180px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.loveText {
+    font-size: 20px;
+    margin-top: 15px;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    font-size: 20px;
+    animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-600px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <img id="mainGif" src="before-yes.gif" class="gif">
+
+    <h1>Muskaan, Will You Be My Valentine? ❤️</h1>
+
+    <button class="yes" id="yesBtn" onclick="sayYes()">Yes ❤️</button>
+    <button class="no" id="noBtn" onclick="handleNo()">No 😜</button>
+
+    <div id="message" class="hidden message-box"></div>
+    <div id="loveText" class="loveText">I love you Muskaan ❤️</div>
+
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="dooron.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let noCount = 0;
+const messages = [
+    "No 😜",
+    "Please, there is another option 🥺",
+    "Please select Yes ❤️",
+    "Please baby girl 🥹",
+    "Just a tiny change of heart? 💕",
+    "You know you want to say Yes 😌"
+];
+
+const finalMessage = `
+Happy Valentine’s Day Love ❤️
+
+I don’t know what the future holds for us, but loving you has been one of the most real feelings of my life.
+
+You are someone I deeply admire. Your strength, your independence, your resilience — it has always inspired me.
+
+You are stronger than you think. More capable than you realize.
+
+If I ever failed to express it properly — you truly mattered to me.
+
+I hope you always feel valued, respected, and loved in the gentlest way possible.
+
+— Ashfan ❤️
+`;
+
+function handleNo() {
+    const btn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    noCount++;
+
+    if (noCount < messages.length) {
+        btn.innerText = messages[noCount];
+    }
+
+    btn.style.top = Math.random() * 70 + "%";
+    btn.style.left = Math.random() * 70 + "%";
+    btn.style.transform = `scale(${1 - noCount * 0.1})`;
+
+    yesBtn.style.transform = `scale(${1 + noCount * 0.15})`;
+
+    if (navigator.vibrate) navigator.vibrate(100);
+}
+
+function typeWriter(text, element, speed = 40) {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
+
+function sayYes() {
+    document.getElementById("bgMusic").play();
+    document.getElementById("mainGif").src = "after-yes.gif";
+    document.getElementById("yesBtn").style.display = "none";
+    document.getElementById("noBtn").style.display = "none";
+
+    const messageBox = document.getElementById("message");
+    messageBox.classList.remove("hidden");
+
+    typeWriter(finalMessage, messageBox);
+
+    setTimeout(() => {
+        document.getElementById("loveText").style.opacity = 1;
+    }, 8000);
+
+    setInterval(createHeart, 300);
+}
+
+function createHeart() {
+    let heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "80vh";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+}
+
+</script>
+
+</body>
+</html>
