@@ -13,16 +13,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     text-align: center;
     color: white;
-    overflow: hidden;
-    animation: backgroundPulse 6s infinite alternate;
+    overflow-x: hidden;
 }
-
-@keyframes backgroundPulse {
-    from { background: linear-gradient(135deg, #ff4e88, #ff9a9e); }
-    to { background: linear-gradient(135deg, #ff6a9e, #ffc3a0); }
 
 .card {
     background: rgba(255,255,255,0.15);
@@ -31,14 +26,8 @@ body {
     backdrop-filter: blur(15px);
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     width: 90%;
-    max-width: 450px;
+    max-width: 500px;
     position: relative;
-    animation: fadeIn 2s ease forwards;
-    opacity: 0;
-}
-
-@keyframes fadeIn {
-    to { opacity: 1; }
 }
 
 h1 {
@@ -58,7 +47,6 @@ button {
 .yes {
     background-color: white;
     color: #ff4e88;
-    z-index: 2;
 }
 
 .no {
@@ -73,10 +61,11 @@ button {
 
 .message-box {
     margin-top: 20px;
-    max-height: 250px;
+    max-height: 300px;
     overflow-y: auto;
     font-size: 14px;
     white-space: pre-wrap;
+    text-align: left;
 }
 
 .gif {
@@ -92,7 +81,6 @@ button {
     transition: opacity 2s ease;
 }
 
-/* Floating hearts */
 .heart {
     position: fixed;
     font-size: 20px;
@@ -118,13 +106,9 @@ button {
     <button class="no" id="noBtn" onclick="handleNo()">No 😜</button>
 
     <div id="message" class="hidden message-box"></div>
-    <div id="loveText" class="loveText">I love you Muskaan ❤️</div>
+    <div id="loveText" class="loveText hidden">I will always choose you ❤️</div>
 
 </div>
-
-<audio id="bgMusic" loop>
-  <source src="dooron.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 
@@ -139,19 +123,123 @@ const messages = [
 ];
 
 const finalMessage = `
-Happy Valentine’s Day Love ❤️
+Happy Valentine’s Day My Love ❤️
 
-I don’t know what the future holds for us, but loving you has been one of the most real feelings of my life.
+Since the day I saw you on that bridge…
+that cute innocent face
+your sweet voice
+your heartwarming smile
+and your melody like laugh…
 
-You are someone I deeply admire. Your strength, your independence, your resilience — it has always inspired me.
+you made my heart skip a beat
 
-You are stronger than you think. More capable than you realize.
+That day I thought maybe we will never meet again
+But the universe had other plans for us
 
-If I ever failed to express it properly — you truly mattered to me.
+We kept meeting again and again 
+through friends
+near that juice shop
+and even in Sapta
 
-I hope you always feel valued, respected, and loved in the gentlest way possible.
+Coincidence?
+I don’t think so cutiee
+Maybe we were always meant to be
 
-— Ashfan ❤️
+After months of planning…
+finally
+18 August 2022 
+a day I will never forget
+
+My heart couldn’t handle your beauty.
+Kitne pyaare lagre tumi??
+I said
+And you laughed
+And I said it again
+just to hear that laugh one more time
+
+From that day till my last day
+I have loved you more and more every single day
+
+01 September 2022 
+when I rushed you into a relationship 😂
+I’ve always been this excited about you
+Always happy just being around you
+
+I never imagined I would date my crush
+Love my crush
+And that my crush would love me back
+
+Can you believe that?
+OMGGGG
+Still feels like a dream
+
+You have been my everything
+And you will always be my everything
+
+I LOVE YOU so much
+I adore you
+I appreciate you
+I look up to you
+
+You are my good deed my love
+You are my heaven in this world
+You are more than everything I ever wished for
+
+You are kind
+You are sweet
+Beautiful
+Gorgeous
+Pretty
+Intelligent
+Hot
+Sexy
+And above all 
+you are PERFECT
+
+And I am so proud of you
+
+The way you built yourself
+The way you worked hard
+The way you achieved everything on your own
+
+Two Europe trips
+Not once
+But twice
+
+Do you even understand how inspiring that is?
+
+Your dedication
+Your discipline
+Your independence
+Your ambition
+
+You are not just beautiful outside
+You are powerful and beautiful inside
+
+You don’t just shine 
+you glow sweetheart
+
+You don’t just dream 
+you achieve it through your hardwork
+
+You don’t wait for opportunities 
+you create them and grab it
+
+I admire the woman you have become
+And I wish that i am lucky that I get to witness your journey
+
+No matter where life takes you
+no matter how high you fly
+I will always be your biggest supporter
+
+I have so much more to say sweetheart
+But one thing will always remain constant 
+
+I will always choose you
+Every single time
+
+Forever yours
+Your Lover Ashfan Muskaan Shaik ❤️
 `;
 
 function handleNo() {
@@ -166,39 +254,24 @@ function handleNo() {
 
     btn.style.top = Math.random() * 70 + "%";
     btn.style.left = Math.random() * 70 + "%";
-    btn.style.transform = `scale(${1 - noCount * 0.1})`;
 
-    yesBtn.style.transform = `scale(${1 + noCount * 0.15})`;
-
-    if (navigator.vibrate) navigator.vibrate(100);
-}
-
-function typeWriter(text, element, speed = 40) {
-    let i = 0;
-    function typing() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typing, speed);
-        }
-    }
-    typing();
+    yesBtn.style.transform = `scale(${1 + noCount * 0.1})`;
 }
 
 function sayYes() {
-    document.getElementById("bgMusic").play();
     document.getElementById("mainGif").src = "after-yes.gif";
     document.getElementById("yesBtn").style.display = "none";
     document.getElementById("noBtn").style.display = "none";
 
     const messageBox = document.getElementById("message");
     messageBox.classList.remove("hidden");
-
-    typeWriter(finalMessage, messageBox);
+    messageBox.innerText = finalMessage;
 
     setTimeout(() => {
-        document.getElementById("loveText").style.opacity = 1;
-    }, 8000);
+        const loveText = document.getElementById("loveText");
+        loveText.classList.remove("hidden");
+        loveText.style.opacity = 1;
+    }, 4000);
 
     setInterval(createHeart, 300);
 }
@@ -208,8 +281,8 @@ function createHeart() {
     heart.innerHTML = "❤️";
     heart.className = "heart";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.top = "80vh";
-    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    heart.style.bottom = "0px";
+    heart.style.fontSize = (Math.random() * 25 + 20) + "px";
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 4000);
